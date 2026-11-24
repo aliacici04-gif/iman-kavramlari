@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f6e5c">
+<title>Fıtrattan Salih Amele</title>
+<style>
+:root{--bg:#f4f6f3;--card:#fff;--ink:#1d2a26;--mut:#5d6b66;--pri:#0f6e5c;--pri2:#e3f1ed;--ok:#1f8a4c;--okb:#e2f5e9;--no:#c0392b;--nob:#fbe7e4;--line:#dfe5e2;--gold:#b7862b}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.5 -apple-system,system-ui,"Segoe UI",Roboto,sans-serif}
+header{position:sticky;top:0;z-index:5;background:var(--pri);color:#fff;padding:10px 14px calc(8px) ;padding-top:max(10px,env(safe-area-inset-top))}
+header .t{display:flex;justify-content:space-between;align-items:center;font-size:14px;gap:8px}
+header b{font-size:15px}
+.bar{height:6px;background:rgba(255,255,255,.25);border-radius:3px;margin-top:7px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:#ffd772;transition:width .3s}
+main{max-width:560px;margin:0 auto;padding:14px 14px 110px}
+.sec{font-size:13px;font-weight:700;letter-spacing:.04em;color:var(--pri);text-transform:uppercase;margin:4px 0 2px}
+h2{font-size:22px;line-height:1.25;margin:0 0 10px}
+p{margin:0 0 10px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin:0 0 12px}
+.ayet{border-left:4px solid var(--gold);background:#fffaf0}
+.ayet .src{font-size:13px;color:var(--mut);margin-top:6px;font-weight:600}
+.btn{display:block;width:100%;min-height:50px;border:1.5px solid var(--line);background:#fff;border-radius:12px;padding:12px 14px;margin:0 0 9px;font:inherit;text-align:left;color:var(--ink);cursor:pointer}
+.btn:active{transform:scale(.99)}
+.btn.sel{border-color:var(--pri);background:var(--pri2)}
+.btn.ok{border-color:var(--ok);background:var(--okb)}
+.btn.no{border-color:var(--no);background:var(--nob)}
+.btn.done{opacity:.55}
+.btn[disabled]{cursor:default}
+.row{display:flex;gap:8px}
+.row .btn{text-align:center;flex:1;font-weight:600}
+.fb{border-radius:12px;padding:11px 13px;margin:4px 0 12px;font-size:15.5px}
+.fb.ok{background:var(--okb);color:#145c33}
+.fb.no{background:var(--nob);color:#8e2a1f}
+.fb.info{background:var(--pri2);color:#0b4f42}
+.flip{perspective:900px;margin:0 0 10px;cursor:pointer}
+.flip .in{position:relative;min-height:118px;transition:transform .45s;transform-style:preserve-3d}
+.flip.on .in{transform:rotateY(180deg)}
+.flip .f,.flip .b{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px;padding:14px;display:flex;flex-direction:column;justify-content:center}
+.flip .f{background:var(--pri);color:#fff;font-weight:700;font-size:18px;text-align:center}
+.flip .f small{font-weight:400;opacity:.8;font-size:13px;margin-top:4px}
+.flip .b{background:#fff;border:1.5px solid var(--pri);transform:rotateY(180deg);font-size:15.5px}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.cols .btn{font-size:14.5px;padding:10px;min-height:58px;margin:0}
+.tag{display:inline-block;font-size:12px;font-weight:700;padding:2px 8px;border-radius:20px;background:var(--pri2);color:var(--pri);margin-bottom:6px}
+.big{font-size:19px;font-weight:600;text-align:center;padding:18px 12px}
+.sortitem{display:flex;align-items:center;gap:8px;background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:8px 8px 8px 14px;margin-bottom:8px;font-size:18px;font-weight:600}
+.sortitem span{flex:1}
+.sortitem button{width:44px;height:44px;border-radius:10px;border:1px solid var(--line);background:var(--bg);font-size:18px}
+select{width:100%;min-height:46px;font:inherit;border:1.5px solid var(--pri);border-radius:10px;padding:8px;background:#fff;color:var(--ink);margin:4px 0}
+textarea{width:100%;min-height:96px;font:inherit;border:1.5px solid var(--line);border-radius:12px;padding:10px}
+.cycle{display:flex;align-items:center;justify-content:center;gap:10px;font-weight:700;font-size:17px;text-align:center;margin:6px 0 14px}
+.cycle div{background:var(--pri2);color:var(--pri);border-radius:12px;padding:12px 10px;flex:1}
+.cycle em{font-style:normal;font-size:26px;color:var(--gold)}
+nav{position:fixed;left:0;right:0;bottom:0;background:rgba(255,255,255,.96);border-top:1px solid var(--line);padding:10px 14px;padding-bottom:max(10px,env(safe-area-inset-bottom));display:flex;gap:10px;z-index:6}
+nav button{flex:1;min-height:52px;border-radius:12px;font:inherit;font-weight:700;border:0}
+#prev{flex:0 0 76px;background:var(--bg);color:var(--ink);border:1px solid var(--line)}
+#next{background:var(--pri);color:#fff}
+#next[disabled]{background:#a9c3bc}
+.sum li{margin-bottom:6px}
+.score{font-size:40px;font-weight:800;color:var(--pri);text-align:center;margin:4px 0}
+</style>
+</head>
+<body>
+<header>
+  <div class="t"><b>Fıtrattan Salih Amele</b><span id="pts">⭐ 0</span></div>
+  <div class="bar"><i id="barI"></i></div>
+</header>
+<main id="app"></main>
+<nav><button id="prev">‹ Geri</button><button id="next">Devam ›</button></nav>
+
+<script>
+/* ---------- İÇERİK ---------- */
+const S = [
+/* KAPAK */
+{sec:"9. Sınıf Din Kültürü ve Ahlak Bilgisi", title:"2.1 İman ve İmanın Mahiyeti", type:"info", html:`
+<div class="card" style="text-align:center;padding:22px 14px">
+<div style="font-size:42px">🌱</div>
+<div style="font-size:19px;font-weight:700;margin:8px 0 4px">Fıtrattan Salih Amele</div>
+<p style="color:var(--mut);margin:0">Kavram öğretimi etkinlikleri · 50 dk</p>
+</div>
+<div class="card" style="text-align:center">
+<b>Kabataş Ticaret Meslek Lisesi</b><br>
+<span style="color:var(--mut)">Ali Sertaç Açıcı</span>
+</div>
+<p style="color:var(--mut);font-size:14.5px;text-align:center">Öğretmenin “başla” dediğinde <b>Devam</b> düğmesine dokun.</p>`},
+/* GİRİŞ */
+{sec:"Giriş · 4 dk", title:"Fabrika Ayarı", type:"flip", intro:"Karta dokun, arkasını oku.",
+ cards:[["📱 “Fabrika ayarı” ne demek?","Cihazın ilk, temiz, bozulmamış hâli. Zamanla yüklenen gereksiz uygulamalar onu yavaşlatabilir; ayarlara dönünce yeniden düzgün çalışır."]]},
+{sec:"Giriş", title:"Bir düşün", type:"mcq", open:true,
+ q:"İnsanın da bir “fabrika ayarı” olsaydı içinde ne olurdu?",
+ opts:["İyiyi sevmek","Gerçeği merak etmek","Hepsi"],
+ fb:"Bu sorunun tek bir doğru cevabı yok. Bugün bu ayarın adını, onu kimin koyduğunu ve onu nasıl koruyacağımızı öğreneceğiz."},
+
+/* 1 FITRAT */
+{sec:"1 · Fıtrat ve İman", title:"Fıtrat nedir?", type:"info", html:`
+<div class="card"><span class="tag">Kavram</span><p><b>Fıtrat:</b> Allah'ın insanı yaratırken içine koyduğu temel yapıdır. Hakikati arama, iyiyi sevme ve Yaratıcı'ya inanma eğilimi bu yapının parçasıdır.</p></div>
+<div class="card ayet">“Sen yüzünü, hakka yönelen biri olarak dine, Allah'ın insanları üzerinde yarattığı fıtrata çevir. Allah'ın yaratmasında değişiklik yoktur. İşte dosdoğru din budur. Fakat insanların çoğu bilmezler.”<div class="src">Rûm suresi, 30. ayet</div></div>
+<div class="card ayet">“Her çocuk fıtrat üzere doğar. Sonra anne babası onu Yahudi, Hristiyan ya da Mecusi yapar.”<div class="src">Hadis · Buhârî, Cenâiz 80; Müslim, Kader 22</div></div>`},
+{sec:"1 · Fıtrat ve İman", title:"Benzetmeyi çöz", type:"match",
+ intro:"Önce soldan bir kutuya, sonra sağda onun karşılığına dokun.",
+ pairs:[["Fabrika ayarı","Yaratılıştan gelen temiz yapı"],["Virüs ve gereksiz uygulamalar","Kötü çevre, yanlış bilgi, kötü alışkanlık"],["Üreticinin güncellemesi","Vahiy ve peygamberler"],["Ayarlara geri dönmek","Tevbe edip hakka yönelmek"]]},
+{sec:"1 · Fıtrat ve İman", title:"Sessiz Ses", type:"mcq",
+ pre:`<div class="card">Ece ödevini yapmadığı için öğretmenine yalan söyler ve kurtulur. Ama akşam içi bir türlü rahat etmez.</div>`,
+ q:"Ece'nin içindeki bu rahatsızlık neyin işaretidir?",
+ opts:["Sadece yorgunluğun","Fıtratındaki iyiyi sevme ve doğruyu arama eğiliminin","Öğretmeninden korkmasının"],a:1,
+ fb:"Fıtrat, yanlış yaptığımızda içimizden uyaran bir ses gibidir."},
+{sec:"1 · Fıtrat ve İman", title:"Sessiz Ses (devam)", type:"mcq",
+ q:"Ece her gün yalan söylemeye devam ederse ne olur?",
+ opts:["İçindeki ses giderek kısılır, “yazılım” bozulur","Hiçbir şey değişmez","Fıtratı tamamen yok olur"],a:0,
+ fb:"Fıtrat yok olmaz ama üstü örtülür. Tevbe ve doğruya dönüş onu yeniden açığa çıkarır."},
+{sec:"1 · Fıtrat ve İman", title:"Doğru mu, yanlış mı?", type:"tf",
+ items:[["Fıtrat, insanın sonradan öğrendiği bir bilgidir.",false,"Fıtrat doğuştan gelir, sonradan öğrenilmez."],["Yaratıcı'ya inanma eğilimi fıtratın parçasıdır.",true,"Evet. İman, fıtratın yöneldiği şeydir."]],
+ after:"Fıtrat bir yöne bakar. O yönde ne var? Tek bir Yaratıcı."},
+
+/* 2 TEVHİT */
+{sec:"2 · Tevhit", title:"Aynı Cümle", type:"flip", intro:"Her peygamberin kartına dokun. Ne söylediklerine bak.",
+ cards:[["Hz. Nûh<small>A'râf 59</small>","“Ey kavmim! Allah'a kulluk edin. Sizin O'ndan başka hiçbir ilahınız yoktur.”"],
+ ["Hz. Hûd<small>A'râf 65</small>","“Ey kavmim! Allah'a kulluk edin. Sizin O'ndan başka hiçbir ilahınız yoktur.”"],
+ ["Hz. Sâlih<small>A'râf 73</small>","“Ey kavmim! Allah'a kulluk edin. Sizin O'ndan başka hiçbir ilahınız yoktur.”"],
+ ["Hz. Şuayb<small>A'râf 85</small>","“Ey kavmim! Allah'a kulluk edin. Sizin O'ndan başka hiçbir ilahınız yoktur.”"],
+ ["Hz. Muhammed (s.a.s.)<small>Enbiyâ 25</small>","“Senden önce hiçbir peygamber göndermedik ki ona, ‘Benden başka hiçbir ilah yoktur; öyleyse bana ibadet edin’ diye vahyetmiş olmayalım.”"]]},
+{sec:"2 · Tevhit", title:"Ne değişmedi?", type:"mcq",
+ pre:`<div class="card ayet">“Andolsun biz her ümmete, ‘Allah'a ibadet edin ve tâğûttan kaçının’ diye (tebliğ etmesi için) bir peygamber gönderdik...”<div class="src">Nahl suresi, 36. ayet</div></div>`,
+ q:"Peygamberler farklı zamanlarda farklı kavimlere geldi. Mesajlarında değişmeyen ne?",
+ opts:["Kullandıkları dil","Allah'tan başka ilah olmadığı, yalnız O'na ibadet edilmesi","Yaşadıkları şehir"],a:1,
+ fb:"Bu ortak mesajın adı <b>tevhit</b>: Allah'ın varlığına ve birliğine inanmak, O'nun zatında, sıfatlarında ve fiillerinde eşi ve ortağı olmadığını kabul etmek."},
+{sec:"2 · Tevhit", title:"Tevhidin boyutları", type:"match",
+ intro:"Soldaki ifadeyi tevhidin ilgili boyutuyla eşleştir.",
+ pairs:[["Allah'ın benzeri yoktur","Zatında birlik"],["Her şeyi bilen ve gören yalnız O'dur","Sıfatlarında birlik"],["Yaratan ve rızık veren yalnız O'dur","Fiillerinde birlik"],["Yalnız O'na ibadet edilir","İbadette birlik"]]},
+{sec:"2 · Tevhit", title:"Kelime-i tevhit", type:"sort",
+ intro:"Okları kullanarak parçaları doğru sıraya diz.",
+ items:["Lâ","ilâhe","illallah"],
+ fb:"<b>Lâ ilâhe</b>: hiçbir ilah yoktur (reddetme). <b>illallah</b>: ancak Allah vardır (kabul etme). Tevhit önce yanlış ilahları reddeder, sonra Allah'ı kabul eder."},
+
+/* 3 TASDİK İKRAR */
+{sec:"3 · Tasdik ve İkrar", title:"İman: kalp ve dil", type:"info", html:`
+<div class="card"><span class="tag">Kavram</span><p><b>İman:</b> Sözlükte inanmak, tasdik etmek, güvende olmak demektir. Terim olarak, Allah'ın varlığına ve birliğine, peygamberlerin Allah'tan alıp tebliğ ettiği kesin hükümlere gönülden inanmak ve onları doğrulamaktır.</p></div>
+<div class="cols"><div class="card" style="margin:0"><div style="font-size:30px">❤️</div><b>Tasdik</b><p style="font-size:15px;margin:4px 0 0">İman esaslarını kalben, tereddütsüz kabul etmek. İmanın geçerli olması için yeterlidir.</p></div>
+<div class="card" style="margin:0"><div style="font-size:30px">💬</div><b>İkrar</b><p style="font-size:15px;margin:4px 0 0">Kalpteki imanı dille söylemek. Toplumda mümin olarak bilinmeyi sağlar.</p></div></div>`},
+{sec:"3 · Tasdik ve İkrar", title:"Kalp mi, dil mi?", type:"bin",
+ bins:["❤️ Kalp (tasdik)","💬 Dil (ikrar)"],
+ items:[["Allah'ın bir olduğundan hiç şüphe duymamak",0],["Kelime-i şehadeti söylemek",1],["Ahiretin varlığına içtenlikle inanmak",0],["“Ben Müslümanım” demek",1],["Peygamberin getirdiklerini doğru kabul etmek",0],["Ezanı duyunca “Eşhedü...” cümlesini tekrar etmek",1]]},
+{sec:"3 · Tasdik ve İkrar", title:"Söylemek yeter mi?", type:"mcq",
+ pre:`<div class="card ayet">“Bedeviler ‘İman ettik’ dediler. De ki: ‘Siz iman etmediniz. Ama “Müslüman olduk” deyin. İman henüz sizin kalplerinize girmedi...’”<div class="src">Hucurât suresi, 14. ayet</div></div>`,
+ q:"Bu kişilerde hangisi var, hangisi eksik?",
+ opts:["Tasdik var, ikrar eksik","İkrar var, tasdik eksik","İkisi de tam"],a:1,
+ fb:"Dille söylemişler ama iman henüz kalbe yerleşmemiş. Dilde ikrar var, kalpte tasdik eksik."},
+{sec:"3 · Tasdik ve İkrar", title:"Bir durum daha", type:"mcq",
+ pre:`<div class="card">Ölüm tehdidi altındaki biri, canını kurtarmak için dilinden inkâr sözü çıkarır. Kalbi ise imanla doludur. <span style="color:var(--mut);font-size:14px">(Nahl 106. ayette anlatılan durum)</span></div>`,
+ q:"Bu kişinin imanı için ne söylenebilir?",
+ opts:["Kalbinde tasdik olduğu için imanı geçerlidir","İkrar olmadığı için imanı gider","Hiçbiri"],a:0,
+ fb:"İmanın temeli kalpteki tasdiktir. Zorlama altında söylenen söz kalpteki imanı yok etmez."},
+{sec:"3 · Tasdik ve İkrar", title:"Hızlı soru", type:"mcq",
+ q:"İmanın geçerli olması için temel şart hangisidir?",
+ opts:["İkrar","Tasdik","İbadet"],a:1,
+ fb:"Tasdik. İkrar ise kişinin toplumda mümin olarak bilinmesi ve ona göre muamele görmesi için gereklidir.",
+ post:`<div class="card"><span class="tag">Bilgi</span><p style="margin:0"><b>Mümin</b>, iman eden kişidir. Rabbine teslim olduğu için kendisi güvendedir, inancını yaşayarak çevresine de güven verir. <b>el-Mü'min</b> aynı zamanda Allah'ın güzel isimlerinden biridir ve “kullarını güvene kavuşturan” anlamına gelir.</p></div>`},
+
+/* 4 SALİH AMEL */
+{sec:"4 · Salih Amel", title:"İman ve salih amel", type:"mcq",
+ pre:`<div class="card ayet">“Asra yemin olsun ki, insan gerçekten ziyan içindedir. Ancak iman edip salih ameller işleyenler, birbirlerine hakkı tavsiye edenler ve birbirlerine sabrı tavsiye edenler başka.”<div class="src">Asr suresi, 1–3. ayetler</div></div>
+<div class="card ayet">“Erkek veya kadın, mümin olarak kim salih amel işlerse, ona mutlaka güzel bir hayat yaşatacağız...”<div class="src">Nahl suresi, 97. ayet</div></div>`,
+ q:"Bu ayetlerde “iman etmek” ile hangi ifade yan yana geliyor?",
+ opts:["Zengin olmak","Salih amel işlemek","Çok konuşmak"],a:1,
+ fb:"<b>Salih amel:</b> İmanın davranışa yansımasıdır. Allah'ın rızasına uygun, kişiye ve topluma faydalı, huzur veren iyi işlerin tümüdür."},
+{sec:"4 · Salih Amel", title:"Hadislerde amel", type:"fill",
+ intro:"Boşluğa uyan ifadeyi seç.",
+ items:[
+  ["“Allah sizin suretlerinize ve mallarınıza bakmaz; fakat kalplerinize ve ___ bakar.”","Müslim, Birr 34",["amellerinize","elbiselerinize","sözlerinize"],0],
+  ["“İman yetmiş küsur şubedir. En üstünü ‘Lâ ilâhe illallah’ sözü, en aşağısı ise ___.”","Müslim, Îmân 58",["çok namaz kılmaktır","yoldan eziyet veren bir şeyi kaldırmaktır","oruç tutmaktır"],1],
+  ["“Amellerin Allah'a en sevimli olanı, az da olsa ___ olanıdır.”","Buhârî, Rikâk 18; Müslim, Müsâfirîn 218",["gösterişli","devamlı","pahalı"],1]]},
+{sec:"4 · Salih Amel", title:"Salih amel mi?", type:"bin",
+ bins:["Evet","Hayır","Niyete bağlı"],
+ items:[
+  ["Kardeşine ödevinde yardım etmek",0],
+  ["Sokaktaki kırık camı kimse basmasın diye kenara çekmek",0],
+  ["Gösteriş için bağış yapıp sosyal medyada paylaşmak",2,"Bağış iyidir ama niyet gösterişse amaç Allah'ın rızası olmaktan çıkar."],
+  ["Arkadaşının sırrını ona haber vermeden başkalarına anlatmak",1,"Güveni kırar ve kalbi incitir. Salih amel huzur verir, zarar vermez."],
+  ["Annesi yorgun olduğunda “Yardım edeyim mi?” deyip sofrayı kurmak",0],
+  ["Beş vakit namazını vaktinde kılmak",0,"İbadetler salih amelin başında gelir."],
+  ["Peygamberimizi sevip onun doğruluğuna ve merhametine benzemeye çalışmak",0,"Onu örnek almak imanın ve sevginin davranışa dönüşmesidir."]]},
+{sec:"4 · Salih Amel", title:"Çift yönlü ok", type:"mcq",
+ pre:`<div class="cycle"><div>İman</div><em>⇄</em><div>Salih amel</div></div>`,
+ q:"Bu ok neden iki yönlü?",
+ opts:["İman salih amele yöneltir, salih amel de imanı güçlendirir","İkisi birbirinden bağımsızdır","Salih amel imandan önce gelir"],a:0,
+ fb:"Salih amel, fabrika ayarını korumanın günlük bakımıdır."},
+
+/* KAPANIŞ */
+{sec:"Kapanış · 4 dk", title:"Kavram ağını tamamla", type:"fill",
+ intro:"Her cümleye uyan kavramı seç.",
+ items:[
+  ["İnsan ___ üzere doğar.","",["fıtrat","ikrar","amel"],0],
+  ["Fıtratın yöneldiği temel inanç ___ inancıdır.","",["tevhit","tasdik","ikrar"],0],
+  ["İman kalpte ___ ile yer bulur.","",["ikrar","tasdik","salih amel"],1],
+  ["Kalpteki imanı dille söylemeye ___ denir.","",["ikrar","fıtrat","tevhit"],0],
+  ["İmanın davranışa yansımasına ___ denir.","",["salih amel","tasdik","fıtrat"],0]]},
+{sec:"Kapanış", title:"Çıkış bileti", type:"write",
+ q:"Bu hafta “fabrika ayarımı” korumak için yapacağım bir salih amel:"},
+{sec:"Bitti", title:"Tebrikler!", type:"end"}
+];
+
+/* ---------- MOTOR ---------- */
+const app=document.getElementById('app'),nx=document.getElementById('next'),pv=document.getElementById('prev');
+let i=0,pts=0;const done={};const st={};
+function addPt(n){pts+=n;document.getElementById('pts').textContent='⭐ '+pts}
+function unlock(){done[i]=1;nx.disabled=false}
+function el(h){const d=document.createElement('div');d.innerHTML=h;return d}
+function fb(box,ok,txt){const f=document.createElement('div');f.className='fb '+(ok===null?'info':ok?'ok':'no');f.innerHTML=txt;box.appendChild(f);f.scrollIntoView({behavior:'smooth',block:'nearest'})}
+function shuffle(a){a=a.slice();for(let k=a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[a[k],a[j]]=[a[j],a[k]]}return a}
+
+function render(){
+ const s=S[i];window.scrollTo(0,0);
+ document.getElementById('barI').style.width=(i/(S.length-1)*100)+'%';
+ app.innerHTML=`<div class="sec">${s.sec}</div><h2>${s.title}</h2>`+(s.intro?`<p style="color:var(--mut)">${s.intro}</p>`:'');
+ if(s.pre)app.appendChild(el(s.pre));
+ const box=document.createElement('div');app.appendChild(box);
+ nx.disabled=!done[i];pv.style.visibility=i?'visible':'hidden';
+ nx.textContent=i==S.length-1?'Baştan':'Devam ›';
+ (T[s.type])(s,box);
+ if(s.post)app.appendChild(el(s.post));
+}
+const T={
+ info(s,b){b.appendChild(el(s.html));unlock()},
+ flip(s,b){let n=0;s.cards.forEach(c=>{const f=el(`<div class="flip"><div class="in" style="min-height:${c[1].length>110?170:118}px"><div class="f">${c[0]}</div><div class="b">${c[1]}</div></div></div>`).firstChild;
+   f.onclick=()=>{if(!f.dataset.o){f.dataset.o=1;n++;if(n==s.cards.length){unlock();addPt(1)}}f.classList.toggle('on')};b.appendChild(f)});
+   if(done[i])unlock()},
+ mcq(s,b){b.appendChild(el(`<p><b>${s.q}</b></p>`));let answered=false;
+   s.opts.forEach((o,k)=>{const x=document.createElement('button');x.className='btn';x.innerHTML=o;b.appendChild(x);
+    x.onclick=()=>{if(answered)return;
+     if(s.open){answered=true;x.classList.add('sel');fb(b,null,s.fb);unlock();return}
+     if(k===s.a){answered=true;x.classList.add('ok');[...b.querySelectorAll('.btn')].forEach(y=>y.disabled=true);fb(b,true,'✔ Doğru! '+(s.fb||''));if(!done[i])addPt(2);unlock()}
+     else{x.classList.add('no');x.disabled=true;fb(b,false,'Tekrar düşün.')}}})},
+ tf(s,b){let c=0;s.items.forEach(it=>{const w=el(`<div class="card"><p><b>${it[0]}</b></p><div class="row"><button class="btn">Doğru</button><button class="btn">Yanlış</button></div></div>`).firstChild;b.appendChild(w);
+   const bs=w.querySelectorAll('.btn');bs.forEach((x,k)=>x.onclick=()=>{const ok=(k===0)===it[1];x.classList.add(ok?'ok':'no');
+    if(ok){bs.forEach(y=>y.disabled=true);fb(w,true,'✔ '+it[2]);addPt(1);if(++c==s.items.length){if(s.after)fb(b,null,s.after);unlock()}}else{x.disabled=true;fb(w,false,'Tekrar düşün.')}})})},
+ match(s,b){const L=shuffle(s.pairs.map((p,k)=>[p[0],k])),R=shuffle(s.pairs.map((p,k)=>[p[1],k]));
+   const g=el('<div class="cols"></div>').firstChild;b.appendChild(g);let selL=null,left=s.pairs.length;
+   const lb=[],rb=[];
+   for(let r=0;r<L.length;r++){[[L[r],lb,'L'],[R[r],rb,'R']].forEach(([it,arr,side])=>{const x=document.createElement('button');x.className='btn';x.textContent=it[0];x.dataset.k=it[1];arr.push(x);g.appendChild(x);
+     x.onclick=()=>{if(x.disabled)return;
+      if(side==='L'){lb.forEach(y=>y.classList.remove('sel'));selL=x;x.classList.add('sel');return}
+      if(!selL){fb(b,null,'Önce soldan bir kutu seç.');return}
+      if(selL.dataset.k===x.dataset.k){[selL,x].forEach(y=>{y.classList.remove('sel');y.classList.add('ok');y.disabled=true});selL=null;addPt(1);if(--left==0){fb(b,true,'✔ Hepsi eşleşti!');unlock()}}
+      else{x.classList.add('no');setTimeout(()=>x.classList.remove('no'),500)}}})}},
+ sort(s,b){let ord=st[i]||shuffle(s.items);if(ord.join()===s.items.join())ord=ord.slice().reverse();st[i]=ord;
+   const list=document.createElement('div');b.appendChild(list);
+   const chk=document.createElement('button');chk.className='btn';chk.style.textAlign='center';chk.style.fontWeight='700';chk.textContent='Kontrol et';b.appendChild(chk);
+   const draw=()=>{list.innerHTML='';ord.forEach((t,k)=>{const r=el(`<div class="sortitem"><span>${t}</span><button>▲</button><button>▼</button></div>`).firstChild;
+     const [u,d]=r.querySelectorAll('button');u.onclick=()=>{if(k>0){[ord[k-1],ord[k]]=[ord[k],ord[k-1]];draw()}};d.onclick=()=>{if(k<ord.length-1){[ord[k+1],ord[k]]=[ord[k],ord[k+1]];draw()}};list.appendChild(r)})};draw();
+   chk.onclick=()=>{b.querySelectorAll('.fb').forEach(f=>f.remove());if(ord.join()===s.items.join()){chk.className='btn ok';fb(b,true,'✔ '+ord.join(' ')+'<br>'+s.fb);if(!done[i])addPt(2);unlock()}else fb(b,false,'Sıra henüz doğru değil.')}},
+ bin(s,b){const its=st[i]||shuffle(s.items);st[i]=its;let k=0;
+   const area=document.createElement('div');b.appendChild(area);
+   const next=()=>{area.innerHTML='';if(k>=its.length){fb(area,true,'✔ Hepsini ayırdın!');unlock();return}
+    const it=its[k];area.appendChild(el(`<div style="text-align:center;color:var(--mut);font-size:14px">${k+1} / ${its.length}</div><div class="card big">${it[0]}</div>`));
+    const row=document.createElement('div');row.className=s.bins.length>2?'':'row';area.appendChild(row);let tried=false;
+    s.bins.forEach((bn,j)=>{const x=document.createElement('button');x.className='btn';if(s.bins.length>2)x.style.textAlign='center';x.textContent=bn;row.appendChild(x);
+     x.onclick=()=>{if(j===it[1]){x.classList.add('ok');row.querySelectorAll('.btn').forEach(y=>y.disabled=true);if(!tried)addPt(1);
+       if(it[2]){fb(area,true,'✔ '+it[2]);const c=document.createElement('button');c.className='btn';c.style.textAlign='center';c.style.fontWeight='700';c.textContent='Sonraki ›';c.onclick=()=>{k++;next()};area.appendChild(c)}
+       else setTimeout(()=>{k++;next()},650)}
+      else{tried=true;x.classList.add('no');x.disabled=true}}})};
+   if(done[i]){k=its.length}next()},
+ fill(s,b){let c=0;s.items.forEach(it=>{const parts=it[0].split('___');const w=el(`<div class="card"><p>${parts[0]}<b>____</b>${parts[1]}</p>${it[1]?`<div class="src" style="font-size:13px;color:var(--mut);font-weight:600">${it[1]}</div>`:''}<select><option value="">Seç…</option>${it[2].map((o,j)=>`<option value="${j}">${o}</option>`).join('')}</select></div>`).firstChild;b.appendChild(w);
+   const sel=w.querySelector('select');sel.onchange=()=>{w.querySelectorAll('.fb').forEach(f=>f.remove());if(+sel.value===it[3]&&sel.value!==''){sel.disabled=true;sel.style.borderColor='var(--ok)';w.querySelector('b').textContent=it[2][it[3]];fb(w,true,'✔ Doğru');addPt(1);if(++c==s.items.length)unlock()}else fb(w,false,'Tekrar dene.')}})},
+ write(s,b){b.appendChild(el(`<p><b>${s.q}</b></p>`));const t=document.createElement('textarea');t.placeholder='Buraya yaz…';t.value=localStorage.getItem('iman_bilet')||'';b.appendChild(t);
+   const chk=()=>{localStorage.setItem('iman_bilet',t.value);if(t.value.trim().length>3)unlock();else nx.disabled=true};t.oninput=chk;chk()},
+ end(s,b){const bilet=localStorage.getItem('iman_bilet')||'';b.appendChild(el(`<div class="card" style="text-align:center"><div class="score">⭐ ${pts}</div>puan topladın</div>
+ <div class="card"><b>Yedi kavram</b><ul class="sum" style="padding-left:20px;margin:8px 0 0;font-size:15.5px">
+ <li><b>Fıtrat:</b> Allah'ın insana koyduğu temel yapı; “fabrika ayarı”.</li>
+ <li><b>Tevhit:</b> Allah'ın varlığına ve birliğine inanmak: Lâ ilâhe illallah.</li>
+ <li><b>İman:</b> Peygamberlerin tebliğ ettiği kesin hükümlere gönülden inanıp onları doğrulamak.</li>
+ <li><b>Mümin:</b> İman eden, kendisi güvende olan ve çevresine güven veren kişi.</li>
+ <li><b>Tasdik:</b> İman esaslarını kalben, tereddütsüz kabul etmek.</li>
+ <li><b>İkrar:</b> Kalpteki imanı dille ifade etmek.</li>
+ <li><b>Salih amel:</b> İmanın davranışa yansıması; iman onu doğurur, o da imanı güçlendirir.</li></ul></div>
+ ${bilet?`<div class="card ayet"><b>Çıkış biletim:</b><br>${bilet.replace(/</g,'&lt;')}</div>`:''}
+ <p style="color:var(--mut);font-size:14px;text-align:center">Bu ekranın görüntüsünü alıp öğretmenine gösterebilirsin.</p>`));unlock()}
+};
+nx.onclick=()=>{if(i==S.length-1){if(confirm('Baştan başlansın mı?')){localStorage.removeItem('iman_bilet');location.reload()}return}i++;render()};
+pv.onclick=()=>{if(i>0){i--;render()}};
+render();
+</script>
+</body>
+</html>
